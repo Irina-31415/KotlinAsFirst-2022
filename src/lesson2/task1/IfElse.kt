@@ -68,7 +68,7 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String {
-    if ((age % 100) in 11..19) {
+    if ((age % 100) in 10..19) {
         return "$age лет"
     }
     if ((age % 10) == 1) {
@@ -205,14 +205,36 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    if (max(max(a, b), c) > 90) {
-        return 2
+    var a1: Double
+    var b1: Double
+    var c1: Double
+    if ((a >= b) && (a >= c)) {
+        c1 = a
+        a1 = b
+        b1 = c
+    } else {
+        if ((b >= a) && (b >= c)) {
+            c1 = b
+            a1 = a
+            b1 = c
+        } else {
+            c1 = c
+            a1 = b
+            b1 = a
+        }
     }
-    if (max(max(a, b), c) == 90.0) {
+    if (c1 >= b1 + a1) {
+        return -1
+    }
+    if ((c1 * c1) < b1 * b1 + a1 * a1) {
+        return 0
+    }
+    if ((c1 * c1) == b1 * b1 + a1 * a1) {
         return 1
     }
-    return 0
+    return 2
 }
+
 
 /**
  * Средняя (3 балла)
