@@ -71,13 +71,11 @@ fun ageDescription(age: Int): String {
     if ((age % 100) in 10..19) {
         return "$age лет"
     }
-    if ((age % 10) == 1) {
-        return "$age год"
+    return when (age % 10) {
+        1 -> "$age год"
+        2, 3, 4 -> "$age года"
+        else -> "$age лет"
     }
-    if ((age % 10 < 5) && (age % 10 != 0)) {
-        return "$age года"
-    }
-    return "$age лет"
 }
 
 
@@ -121,33 +119,30 @@ fun whichRookThreatens(
     rookX2: Int, rookY2: Int
 ): Int {
     var fl = 0
-    var p1 = 0
+    var p = 0
     if (kingX == rookX1) {
-        p1 = 1
+        p = 1
         fl = 1
     }
-    var p2 = 0
     if (kingX == rookX2) {
-        p2 = 1
+        p += 1
         fl = 2
     }
-    var p3 = 0
     if (kingY == rookY1) {
-        p3 = 1
+        p += 1
         fl = 1
     }
-    var p4 = 0
     if (kingY == rookY2) {
-        p4 = 1
+        p += 1
         fl = 2
     }
-    if ((p1 + p2 + p3 + p4) == 0) {
+    if (p == 0) {
         return 0
     }
-    if ((p1 + p2 + p3 + p4) == 2) {
+    if (p == 2) {
         return 3
     }
-    if (((p1 + p2 + p3 + p4) == 1) and (fl == 1)) {
+    if ((p == 1) && (fl == 1)) {
         return 1
     }
     return 2
