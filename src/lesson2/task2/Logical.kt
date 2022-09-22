@@ -3,6 +3,7 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
+import kotlin.math. *
 
 /**
  * Пример
@@ -18,7 +19,11 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Четырехзначное число назовем счастливым, если сумма первых двух ее цифр равна сумме двух последних.
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
-fun isNumberHappy(number: Int): Boolean = TODO()
+fun isNumberHappy(number: Int): Boolean {
+    val a = number % 10 + (number / 10) % 10
+    val b = (number / 100) % 10 + (number / 1000)
+    return a == b
+}
 
 /**
  * Простая (2 балла)
@@ -27,7 +32,8 @@ fun isNumberHappy(number: Int): Boolean = TODO()
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
+    ((x1 == x2) || (y1 == y2) || (abs(x1 - x2) == abs(y1 - y2)))
 
 
 /**
@@ -36,7 +42,30 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
  * Дан номер месяца (от 1 до 12 включительно) и год (положительный).
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
-fun daysInMonth(month: Int, year: Int): Int = TODO()
+fun daysInMonth(month: Int, year: Int): Int {
+    var v = 0
+    if (year % 4 == 0) {
+        v = 1
+        if ((year % 100 == 0) && (year % 400 != 0)) {
+            v = 0
+        }
+    }
+    if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+        return 31
+    }
+    if (month == 4 || month == 6 || month == 9 || month == 11) {
+        return 30
+    }
+    if (month == 2) {
+        if (v == 0) {
+            return 28
+        } else {
+            return 29
+        }
+    }
+    return 0
+}
+
 
 /**
  * Простая (2 балла)
@@ -48,7 +77,7 @@ fun daysInMonth(month: Int, year: Int): Int = TODO()
 fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
-): Boolean = TODO()
+): Boolean =(sqrt(sqr(x2-x1)+sqr(y2-y1))+r1)<=r2
 
 /**
  * Средняя (3 балла)
@@ -59,4 +88,19 @@ fun circleInside(
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = TODO()
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
+    var c1 = max(max(a, b), c)
+    var b1 = min(min(a, b), c)
+    var a1: Int
+    if ((a != c1) && (a != b1)) {
+        a1 = a
+    } else if ((b != c1) && (b != b1)) {
+        a1 = b
+    } else if (a!=b){
+        a1 = c
+    }
+    else{
+        a1=a
+    }
+    return ((max(r, s) >= a1) && (min(r, s) >= b1))
+}
