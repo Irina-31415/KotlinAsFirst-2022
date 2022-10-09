@@ -260,6 +260,9 @@ fun factorizeToString(n: Int): String {
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
 fun convert(n: Int, base: Int): List<Int> {
+    if (n==0) {
+        return listOf(0)
+    }
     var t = n
     var m = listOf<Int>()
     while (t > 0) {
@@ -364,7 +367,4 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String {
-    TODO()
-
-}
+fun russian(n: Int): String =TODO()
