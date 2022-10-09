@@ -33,7 +33,7 @@ fun isNumberHappy(number: Int): Boolean {
  * Считать, что ферзи не могут загораживать друг друга.
  */
 fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
-    ((x1 == x2) || (y1 == y2) || (abs(x1 - x2) == abs(y1 - y2)))
+    x1 == x2 || y1 == y2 || abs(x1 - x2) == abs(y1 - y2)
 
 
 /**
@@ -43,11 +43,11 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
 fun daysInMonth(month: Int, year: Int): Int {
-    var v = 0
+    var v = false
     if (year % 4 == 0) {
-        v = 1
+        v = true
         if ((year % 100 == 0) && (year % 400 != 0)) {
-            v = 0
+            v = false
         }
     }
     if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
@@ -57,7 +57,7 @@ fun daysInMonth(month: Int, year: Int): Int {
         return 30
     }
     if (month == 2) {
-        if (v == 0) {
+        if (!v) {
             return 28
         } else {
             return 29
@@ -77,7 +77,7 @@ fun daysInMonth(month: Int, year: Int): Int {
 fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
-): Boolean =(sqrt(sqr(x2-x1)+sqr(y2-y1))+r1)<=r2
+): Boolean = (sqrt(sqr(x2 - x1) + sqr(y2 - y1)) + r1) <= r2
 
 /**
  * Средняя (3 балла)
@@ -89,18 +89,17 @@ fun circleInside(
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    var c1 = max(max(a, b), c)
-    var b1 = min(min(a, b), c)
+    var c1 = maxOf(a, b, c)
+    var b1 = minOf(a, b, c)
     var a1: Int
     if ((a != c1) && (a != b1)) {
         a1 = a
     } else if ((b != c1) && (b != b1)) {
         a1 = b
-    } else if (a!=b){
+    } else if (a != b) {
         a1 = c
-    }
-    else{
-        a1=a
+    } else {
+        a1 = a
     }
     return ((max(r, s) >= a1) && (min(r, s) >= b1))
 }

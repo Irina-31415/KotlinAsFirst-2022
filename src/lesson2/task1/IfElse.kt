@@ -95,13 +95,11 @@ fun timeForHalfWay(
     val s2 = t2 * v2
     val s3 = t3 * v3
     val s = (s1 + s2 + s3) / 2
-    if (s <= s1) {
-        return s / v1
+    return when {
+        s <= (s1) -> s / v1
+        s <= (s1 + s2) -> t1 + ((s - s1) / v2)
+        else -> t1 + t2 + ((s - s1 - s2) / v3)
     }
-    if (s <= (s1 + s2)) {
-        return t1 + ((s - s1) / v2)
-    }
-    return t1 + t2 + ((s - s1 - s2) / v3)
 }
 
 /**
@@ -118,34 +116,32 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ): Int {
-    var fl = 0
+    var fl = false
     var p = 0
     if (kingX == rookX1) {
         p = 1
-        fl = 1
+        fl = false
     }
     if (kingX == rookX2) {
         p += 1
-        fl = 2
+        fl = true
     }
     if (kingY == rookY1) {
         p += 1
-        fl = 1
+        fl = false
     }
     if (kingY == rookY2) {
         p += 1
-        fl = 2
+        fl = true
     }
-    if (p == 0) {
-        return 0
-    }
-    if (p == 2) {
-        return 3
-    }
-    if ((p == 1) && (fl == 1)) {
+    if ((p == 1) && !fl) {
         return 1
     }
-    return 2
+    return when (p) {
+        0 -> 0
+        2 -> 3
+        else -> 2
+    }
 }
 
 
@@ -164,32 +160,28 @@ fun rookOrBishopThreatens(
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
 ): Int {
-    var fl = 0
-    var p1 = 0
+    var fl = false
+    var p = 0
     if (kingX == rookX) {
-        p1 = 1
-        fl = 1
+        p += 1
+        fl = false
     }
-    var p2 = 0
     if (kingY == rookY) {
-        p2 = 1
-        fl = 1
+        p += 1
+        fl = false
     }
-    var p3 = 0
     if (abs(kingX - bishopX) == abs(kingY - bishopY)) {
-        p3 = 1
-        fl = 2
+        p += 1
+        fl = true
     }
-    if ((p1 + p2 + p3) == 0) {
-        return 0
-    }
-    if ((p1 + p2 + p3) == 2) {
-        return 3
-    }
-    if (((p1 + p2 + p3) == 1) and (fl == 1)) {
+    if (p == 1 && !fl) {
         return 1
     }
-    return 2
+    return when(p){
+        0 -> 0
+        2 -> 3
+        else -> 2
+    }
 }
 
 /**
@@ -219,16 +211,12 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
             b1 = a
         }
     }
-    if (c1 >= b1 + a1) {
-        return -1
+    return when{
+        c1 >= b1 + a1 -> -1
+        (c1 * c1) < b1 * b1 + a1 * a1 -> 0
+        (c1 * c1) == b1 * b1 + a1 * a1 -> 1
+        else -> 2
     }
-    if ((c1 * c1) < b1 * b1 + a1 * a1) {
-        return 0
-    }
-    if ((c1 * c1) == b1 * b1 + a1 * a1) {
-        return 1
-    }
-    return 2
 }
 
 

@@ -209,14 +209,8 @@ fun polynom(p: List<Int>, x: Int): Int {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun accumulate(list: MutableList<Int>): MutableList<Int> {
-    val n = list.size
-    var t = 0
-    if (n != 0) {
-        t = list[0]
-    }
-    for (i in 1..n - 1) {
-        t += list[i]
-        list[i] = t
+    for (i in 1..list.size - 1) {
+        list[i] += list[i - 1]
     }
     return list
 }
@@ -230,10 +224,13 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  */
 fun factorize(n: Int): List<Int> {
     var m = listOf<Int>()
-    for(i in 2..floor((sqrt(n.toDouble()))).toInt()){
-        if (n%i==0){
-            m+=i
-            m+=n/i
+    var n1 = n
+    for (i in 2..n) {
+        if (n1 % i == 0) {
+            while (n1 % i == 0) {
+                m += i
+                n1 /= i
+            }
         }
     }
     return m.sorted()
@@ -246,7 +243,14 @@ fun factorize(n: Int): List<Int> {
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String = TODO()
+fun factorizeToString(n: Int): String {
+    val m = factorize(n)
+    var k = ""
+    for (i in 0..m.size - 2) {
+        k += m[i].toString() + '*'
+    }
+    return k + m[m.size - 1].toString()
+}
 
 /**
  * Средняя (3 балла)
@@ -255,7 +259,15 @@ fun factorizeToString(n: Int): String = TODO()
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    var t = n
+    var m = listOf<Int>()
+    while (t > 0) {
+        m += t % base
+        t /= base
+    }
+    return m.reversed()
+}
 
 /**
  * Сложная (4 балла)
@@ -268,7 +280,22 @@ fun convert(n: Int, base: Int): List<Int> = TODO()
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String {
+    val a = listOf(
+        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
+        "u", "v", "w", "x", "y", "z"
+    )
+    val m = convert(n, base)
+    var s = ""
+    for (i in 0..m.size - 1) {
+        if (m[i] < 10) {
+            s += m[i].toString()
+        } else {
+            s += a[m[i] - 10]
+        }
+    }
+    return s
+}
 
 /**
  * Средняя (3 балла)
@@ -277,7 +304,15 @@ fun convertToString(n: Int, base: Int): String = TODO()
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int = TODO()
+fun decimal(digits: List<Int>, base: Int): Int {
+    var m = 0
+    var k = digits.size - 1
+    for (i in digits) {
+        m += i * base.toDouble().pow(k).toInt()
+        k -= 1
+    }
+    return m
+}
 
 /**
  * Сложная (4 балла)
@@ -291,7 +326,26 @@ fun decimal(digits: List<Int>, base: Int): Int = TODO()
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, str.toInt(base)), запрещается.
  */
-fun decimalFromString(str: String, base: Int): Int = TODO()
+fun decimalFromString(str: String, base: Int): Int {
+    var m = 0
+    val a = listOf<Char>(
+        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+        'u', 'v', 'w', 'x', 'y', 'z'
+    )
+    var k = str.length - 1
+    for (i in 0..str.length - 1) {
+        if (str[i] in a) {
+            val s = a.indexOf(str[i]) + 10
+            m += s * base.toDouble().pow(k).toInt()
+            k -= 1
+        } else {
+
+            m += (str[i].toInt() - '0'.code) * base.toDouble().pow(k).toInt()
+            k -= 1
+        }
+    }
+    return m
+}
 
 /**
  * Сложная (5 баллов)
@@ -310,4 +364,7 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    TODO()
+
+}
