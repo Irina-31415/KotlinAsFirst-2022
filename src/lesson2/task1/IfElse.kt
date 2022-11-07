@@ -134,7 +134,7 @@ fun whichRookThreatens(
         p += 1
         fl = true
     }
-    if ((p == 1) && !fl) {
+    if (p == 1 && !fl) {
         return 1
     }
     return when (p) {

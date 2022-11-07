@@ -50,14 +50,15 @@ fun daysInMonth(month: Int, year: Int): Int {
             v = false
         }
     }
-    if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+    if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8
+        || month == 10 || month == 12) {
         return 31
     }
     if (month == 4 || month == 6 || month == 9 || month == 11) {
         return 30
     }
     if (month == 2) {
-        if (!v) {
+        if (!(year % 4 == 0) || (year % 100 == 0) && (year % 400 != 0)) {
             return 28
         } else {
             return 29
@@ -91,15 +92,11 @@ fun circleInside(
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     var c1 = maxOf(a, b, c)
     var b1 = minOf(a, b, c)
-    var a1: Int
-    if ((a != c1) && (a != b1)) {
-        a1 = a
-    } else if ((b != c1) && (b != b1)) {
-        a1 = b
-    } else if (a != b) {
-        a1 = c
-    } else {
-        a1 = a
+    var a1 = when{
+        (a != c1) && (a != b1) -> a
+        (b != c1) && (b != b1) -> b
+        (a != b) -> c
+        else -> a
     }
-    return ((max(r, s) >= a1) && (min(r, s) >= b1))
+    return (max(r, s) >= a1 && min(r, s) >= b1)
 }
