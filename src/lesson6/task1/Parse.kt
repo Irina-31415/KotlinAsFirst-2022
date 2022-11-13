@@ -91,7 +91,7 @@ fun dateStrToDigit(str: String): String {
     if (!(k[0].toInt() in 1..t)) {
         return ""
     }
-    return String.format("%02d.%02d.%04d", k[0].toInt(), m, k[2].toInt())
+    return String.format("%02d.%02d.%d", k[0].toInt(), m, k[2].toInt())
 }
 
 /**
