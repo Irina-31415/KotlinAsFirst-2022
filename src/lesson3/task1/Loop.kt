@@ -176,12 +176,17 @@ fun lcm(m: Int, n: Int): Int {
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    for (i in 2..ceil(sqrt(min(m, n).toDouble())).toInt()) {
-        if ((m % i == 0) && (n % i == 0)) {
-            return false
+    var x = m
+    var y = n
+    while (x > 0 && y > 0) {
+        if (x > y) {
+            x -= y
+        } else {
+            y -= x
         }
     }
-    return (!(max(m, n) % min(m, n) == 0))
+    return max(x, y) == 1
+
 }
 
 /**
@@ -358,5 +363,5 @@ fun fibSequenceDigit(n: Int): Int {
         }
     }
     val k = m - n + 1
-    return (t1) % (10.0.pow(k)).toInt() / (10.0.pow(k - 1)).toInt()
+    return t1 % (10.0.pow(k)).toInt() / (10.0.pow(k - 1)).toInt()
 }

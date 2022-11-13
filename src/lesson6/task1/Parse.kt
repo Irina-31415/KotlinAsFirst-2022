@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -13,6 +15,7 @@ package lesson6.task1
  * Время представлено строкой вида "11:34:45", содержащей часы, минуты и секунды, разделённые двоеточием.
  * Разобрать эту строку и рассчитать количество секунд, прошедшее с начала дня.
  */
+
 fun timeStrToSeconds(str: String): Int {
     val parts = str.split(":")
     var result = 0
@@ -74,7 +77,22 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val k = str.split(" ")
+    if (k.size != 3) {
+        return ""
+    }
+    val s = listOf(
+        "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября",
+        "ноября", "декабря"
+    )
+    val m = s.indexOf(k[1]) + 1
+    val t = daysInMonth(m, k[2].toInt())
+    if (!(k[0].toInt() in 1..t)) {
+        return ""
+    }
+    return String.format("%02d.%02d.%04d", k[0].toInt(), m, k[2].toInt())
+}
 
 /**
  * Средняя (4 балла)
@@ -86,7 +104,32 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    var k = digital.split(".").toMutableList()
+    if (k.size != 3) {
+        return ""
+    }
+    val s = listOf(
+        "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября",
+        "ноября", "декабря"
+    )
+    try {
+        val day = k[0].toInt()
+        val month = k[1].toInt()
+        val year = k[2].toInt()
+    } catch (e: NumberFormatException) {
+        return ""
+    }
+    if (!(k[1].toInt() in 1..12)) {
+        return ""
+    }
+    val m = s[k[1].toInt() - 1]
+    val t = daysInMonth(k[1].toInt(), k[2].toInt())
+    if (!(k[0].toInt() in 1..t)) {
+        return ""
+    }
+    return String.format("%d %s %d", k[0].toInt(), m, k[2].toInt())
+}
 
 /**
  * Средняя (4 балла)
@@ -138,7 +181,39 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    val e = expression.split(" ")
+    var n = 0
+    var m = 0
+    try {
+        n = e[0].toInt()
+    } catch (e: NumberFormatException) {
+        throw IllegalArgumentException("IllegalArgumentException")
+    }
+    if (e[0][0] !in '0'..'9') {
+        throw IllegalArgumentException("IllegalArgumentException")
+    }
+    val k = e.size
+    for (i in 1..k - 1 step 2) {
+        try {
+            m = e[i + 1].toInt()
+        } catch (e: NumberFormatException) {
+            throw IllegalArgumentException("IllegalArgumentException")
+        }
+        if (e[i + 1][0] !in '0'..'9') {
+            throw IllegalArgumentException("IllegalArgumentException")
+        }
+        if (e[i] != "+" && e[i] != "-") {
+            throw IllegalArgumentException("IllegalArgumentException")
+        }
+        if (e[i] == "+") {
+            n += m
+        } else {
+            n -= m
+        }
+    }
+    return n
+}
 
 /**
  * Сложная (6 баллов)
