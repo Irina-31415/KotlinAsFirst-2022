@@ -217,12 +217,7 @@ fun revert(n: Int): Int {
  */
 fun isPalindrome(n: Int): Boolean {
     var t = n
-    var s = 0
-    while (t > 0) {
-        s += 1
-        t /= 10
-    }
-    t = n
+    var s = digitNumber(t)
     while (t > 9) {
         if ((t % 10) != (t / (10.0.pow(s - 1)).toInt())) {
             return false
@@ -325,10 +320,9 @@ fun cos(x: Double, eps: Double): Double {
 fun squareSequenceDigit(n: Int): Int {
     var m = 0
     var t = 0
-    var t1 = 0
     while (m < n) {
         t += 1
-        t1 = t * t
+        val t1 = t * t
         m += digitNumber(t1)
     }
     val k = m - n + 1
@@ -351,16 +345,12 @@ fun fibSequenceDigit(n: Int): Int {
     var m = 2
     var t = 1
     var t1 = 1
-    var s = 0
     while (m < n) {
         val x = t
         t = t1
         t1 = t + x
-        s = t1
-        while (s > 0) {
-            m += 1
-            s /= 10
-        }
+        var s = t1
+        m += digitNumber(s)
     }
     val k = m - n + 1
     return t1 % (10.0.pow(k)).toInt() / (10.0.pow(k - 1)).toInt()

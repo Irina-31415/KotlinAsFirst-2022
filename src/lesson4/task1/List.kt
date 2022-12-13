@@ -225,13 +225,16 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
 fun factorize(n: Int): List<Int> {
     var m = listOf<Int>()
     var n1 = n
-    for (i in 2..n) {
+    for (i in 2..ceil(sqrt(n.toDouble())).toInt()) {
         if (n1 % i == 0) {
             while (n1 % i == 0) {
                 m += i
                 n1 /= i
             }
         }
+    }
+    if (m.size==0){
+        m+=n
     }
     return m.sorted()
 }
@@ -245,9 +248,10 @@ fun factorize(n: Int): List<Int> {
  */
 fun factorizeToString(n: Int): String {
     val m = factorize(n)
-    var k = ""
-    for (i in 0..m.size - 2) {
-        k += m[i].toString() + '*'
+    var k = buildString {
+        for (i in 0..m.size - 2) {
+            append(m[i].toString() + '*')
+        }
     }
     return k + m[m.size - 1].toString()
 }
@@ -260,7 +264,7 @@ fun factorizeToString(n: Int): String {
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
 fun convert(n: Int, base: Int): List<Int> {
-    if (n==0) {
+    if (n == 0) {
         return listOf(0)
     }
     var t = n
@@ -284,17 +288,14 @@ fun convert(n: Int, base: Int): List<Int> {
  * (например, n.toString(base) и подобные), запрещается.
  */
 fun convertToString(n: Int, base: Int): String {
-    val a = listOf(
-        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
-        "u", "v", "w", "x", "y", "z"
-    )
+
     val m = convert(n, base)
     var s = ""
     for (i in 0..m.size - 1) {
         if (m[i] < 10) {
             s += m[i].toString()
         } else {
-            s += a[m[i] - 10]
+            s += ('a'.code + m[i] - 10).toChar()
         }
     }
     return s
@@ -331,14 +332,10 @@ fun decimal(digits: List<Int>, base: Int): Int {
  */
 fun decimalFromString(str: String, base: Int): Int {
     var m = 0
-    val a = listOf<Char>(
-        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
-        'u', 'v', 'w', 'x', 'y', 'z'
-    )
     var k = str.length - 1
     for (i in 0..str.length - 1) {
-        if (str[i] in a) {
-            val s = a.indexOf(str[i]) + 10
+        if (str[i] in 'a'..'z') {
+            val s=(str[i].code-'a'.code +10)
             m += s * base.toDouble().pow(k).toInt()
             k -= 1
         } else {
@@ -367,4 +364,4 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String =TODO()
+fun russian(n: Int): String = TODO()

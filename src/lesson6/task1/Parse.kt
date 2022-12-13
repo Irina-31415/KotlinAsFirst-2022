@@ -88,7 +88,8 @@ fun dateStrToDigit(str: String): String {
     )
     val m = s.indexOf(k[1]) + 1
     val t = daysInMonth(m, k[2].toInt())
-    if (!(k[0].toInt() in 1..t)) {
+
+    if (!(k[0].toIntOrNull() in 1..t)) {
         return ""
     }
     return String.format("%02d.%02d.%d", k[0].toInt(), m, k[2].toInt())

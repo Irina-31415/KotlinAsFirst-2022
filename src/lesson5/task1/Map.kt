@@ -105,7 +105,7 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
         } else {
             a = mutableListOf(i)
         }
-        rev.put(j, a!!.toList())
+        rev.put(j, a!!)
     }
     return rev.toMap()
 }
@@ -179,11 +179,11 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = TODO()
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
 fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
-    var c = mutableMapOf<String, String>()
-    c.putAll(mapA.toMutableMap())
+    val c = mutableMapOf<String, String>()
+    c.putAll(mapA)
     for ((i, j) in mapB) {
         if (c[i] == null) {
-            c = (c + Pair(i, j)).toMutableMap()
+            c.put(i, j)
         } else {
             if (c[i] != j) {
                 c[i] += ", $j"
@@ -221,10 +221,10 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *   ) -> "Мария"
  */
 fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
-    if (kind==""){
+    if (kind == "") {
         return null
     }
-    var m = 1.7E308
+    var m = Double.MAX_VALUE
     var x = ""
     for ((i, y) in stuff) {
         val j = y.first
