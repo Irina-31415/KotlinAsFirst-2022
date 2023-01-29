@@ -233,8 +233,8 @@ fun factorize(n: Int): List<Int> {
             }
         }
     }
-    if (m.size==0){
-        m+=n
+    if (m.size == 0) {
+        m += n
     }
     return m.sorted()
 }
@@ -335,7 +335,7 @@ fun decimalFromString(str: String, base: Int): Int {
     var k = str.length - 1
     for (i in 0..str.length - 1) {
         if (str[i] in 'a'..'z') {
-            val s=(str[i].code-'a'.code +10)
+            val s = (str[i].code - 'a'.code + 10)
             m += s * base.toDouble().pow(k).toInt()
             k -= 1
         } else {

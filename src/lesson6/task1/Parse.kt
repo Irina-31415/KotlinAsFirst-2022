@@ -184,10 +184,9 @@ fun bestHighJump(jumps: String): Int = TODO()
  */
 fun plusMinus(expression: String): Int {
     val e = expression.split(" ")
-    var n = 0
     var m = 0
-    try {
-        n = e[0].toInt()
+    var n = try {
+        e[0].toInt()
     } catch (e: NumberFormatException) {
         throw IllegalArgumentException("IllegalArgumentException")
     }
