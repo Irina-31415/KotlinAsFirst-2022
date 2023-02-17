@@ -290,12 +290,13 @@ fun convert(n: Int, base: Int): List<Int> {
 fun convertToString(n: Int, base: Int): String {
 
     val m = convert(n, base)
-    var s = ""
-    for (i in 0..m.size - 1) {
-        if (m[i] < 10) {
-            s += m[i].toString()
-        } else {
-            s += ('a'.code + m[i] - 10).toChar()
+    val s = buildString {
+        for (i in 0..m.size - 1) {
+            if (m[i] < 10) {
+                append(m[i].toString())
+            } else {
+                append(('a'.code + m[i] - 10).toChar())
+            }
         }
     }
     return s

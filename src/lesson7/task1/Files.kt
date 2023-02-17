@@ -115,7 +115,35 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
+    //val writer = File(outputName).bufferedWriter()
+    val writer = FileOutputStream(outputName)
+    val w = PrintStream(writer)
+    val k = File(inputName).readText()
+    val a = listOf(
+        "ЖЫ", "ЖЯ", "ЖЮ", "ЧЫ", "ЧЯ", "ЧЮ", "ШЫ", "ШЯ", "ШЮ", "ЩЫ", "ЩЯ", "ЩЮ",
+        "жы", "жя", "жю", "чы", "чя", "чю", "шы", "шя", "шю", "щы", "щя", "щю",
+        "Жы", "Жя", "Жю", "Чы", "Чя", "Чю", "Шы", "Шя", "Шю", "Щы", "Щя", "Щю",
+        "жЫ", "жЯ", "жЮ", "чЫ", "чЯ", "чЮ", "шЫ", "шЯ", "щЮ", "щЫ", "щЯ", "щЮ"
+    )
+    val b = listOf(
+        "ЖИ", "ЖА", "ЖУ", "ЧИ", "ЧА", "ЧУ", "ШИ", "ША", "ШУ", "ЩИ", "ЩА", "ЩУ",
+        "жи", "жа", "жу", "чи", "ча", "чу", "ши", "ша", "шу", "щи", "ща", "щу",
+        "Жи", "Жа", "Жу", "Чи", "Ча", "Чу", "Ши", "Ша", "Шу", "Щи", "Ща", "Щу",
+        "жИ", "жА", "жУ", "чИ", "чА", "чУ", "шИ", "шА", "шУ", "щИ", "щА", "щУ"
+    )
+    var fl = true
+    for (i in 0..k.length - 1) {
+        if (i != k.length - 1 && (k[i] + k[i + 1].toString()) in a) {
+            val m = a.indexOf(k[i] + k[i + 1].toString())
+            w.print(b[m])
+            fl = false
+        } else {
+            if (fl) {
+                w.print(k[i])
+            }
+            fl = true
+        }
+    }
 }
 
 /**
@@ -524,7 +552,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         s += 1
 
     }
-    if(t!=0) {
+    if (t != 0) {
         for (i in 0..t) {
             ps.print(" ")
         }

@@ -92,6 +92,9 @@ fun dateStrToDigit(str: String): String {
     if (!(k[0].toIntOrNull() in 1..t)) {
         return ""
     }
+    if (!(k[0].all { Character.isDigit(it) })){
+        return ""
+    }
     return String.format("%02d.%02d.%d", k[0].toInt(), m, k[2].toInt())
 }
 
@@ -115,9 +118,9 @@ fun dateDigitToStr(digital: String): String {
         "ноября", "декабря"
     )
     try {
-        val day = k[0].toInt()
-        val month = k[1].toInt()
-        val year = k[2].toInt()
+        k[0].toInt()
+        k[1].toInt()
+        k[2].toInt()
     } catch (e: NumberFormatException) {
         return ""
     }

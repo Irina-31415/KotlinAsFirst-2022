@@ -190,7 +190,7 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
             }
         }
     }
-    return c.toMap<String, String>()
+    return c
 }
 
 /**
@@ -224,6 +224,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
     if (kind == "") {
         return null
     }
+    var f = true
     var m = Double.MAX_VALUE
     var x = ""
     for ((i, y) in stuff) {
@@ -232,9 +233,10 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
         if (j == kind && k < m) {
             m = k
             x = i
+            f = false
         }
     }
-    if (m == 1.7E308) {
+    if (f) {
         return null
     }
     return x
